@@ -22,7 +22,6 @@
       color: #fff;
     }
 
-    /* 背景遮罩，增强倒计时可读性 */
     body::before {
       content: "";
       position: absolute;
@@ -38,7 +37,6 @@
       height: 100vh;
     }
 
-    /* 左侧 2/3 区域，用来承载整个倒计时 */
     .countdown-wrapper {
       position: absolute;
       left: 0;
@@ -51,7 +49,6 @@
       padding: 2vw;
     }
 
-    /* 倒计时整体内容 */
     .countdown-box {
       width: 100%;
       display: flex;
@@ -62,7 +59,14 @@
       transform: translateY(-2vh);
     }
 
-    /* 标题改成白色 */
+   .countdown-logo {
+      width: clamp(120px, 11vw, 220px);
+      height: auto;
+      display: block;
+      margin: 0 auto 6px auto;
+      filter: brightness(0) invert(1);
+    }
+
     .countdown-title {
       font-size: clamp(34px, 3.6vw, 68px);
       font-weight: 700;
@@ -114,7 +118,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* 适配稍小屏幕 */
     @media (max-width: 1200px) {
       .countdown-wrapper {
         width: 70%;
@@ -138,6 +141,10 @@
       .countdown-cards {
         flex-wrap: wrap;
       }
+
+      .countdown-logo {
+        width: clamp(220px, 45vw, 420px);
+      }
     }
   </style>
 </head>
@@ -145,6 +152,7 @@
   <div class="screen-container">
     <div class="countdown-wrapper">
       <div class="countdown-box">
+        <img src="Schneider_CN.png" alt="Schneider Electric Logo" class="countdown-logo" />
         <div class="countdown-title">灯塔点亮倒计时...</div>
 
         <div class="countdown-cards">
@@ -178,7 +186,6 @@
     const minutesEl = document.getElementById("minutes");
     const secondsEl = document.getElementById("seconds");
 
-    // 目标时间
     const TARGET_TIME = new Date("2026-04-20 23:59:59").getTime();
 
     function updateCountdown() {
