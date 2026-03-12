@@ -37,16 +37,31 @@
       height: 100vh;
     }
 
-    .countdown-wrapper {
+    /* 施耐德logo独立容器 - 固定右下角 */
+    .logo-wrapper {
       position: absolute;
       right: 2.5vw;
       bottom: 2.5vh;
-      width: 66.6667%;
+      z-index: 3;
+    }
+    .countdown-logo {
+      width: clamp(80px, 7vw, 140px);
       height: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+
+    /* 倒计时内容容器 - 左侧2/3区域居中 */
+    .countdown-wrapper {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 66.6667%; /* 左侧2/3宽度 */
+      height: 100vh;
       display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      padding: 0;
+      align-items: center; /* 垂直居中 */
+      justify-content: center; /* 水平居中 */
+      padding: 20px;
     }
 
     .countdown-box {
@@ -56,15 +71,6 @@
       align-items: center;
       justify-content: center;
       gap: 2.2vh;
-      transform: translateY(-2vh);
-    }
-
-    .countdown-logo {
-      width: clamp(80px, 7vw, 140px);
-      height: auto;
-      display: block;
-      margin: 0 auto 6px auto;
-      filter: brightness(0) invert(1);
     }
 
     .countdown-title {
@@ -77,9 +83,10 @@
       margin-bottom: 0.5vh;
     }
 
+    /* 英文字体调大+加粗 */
     .countdown-subtitle {
-      font-size: clamp(14px, 1.15vw, 24px);
-      font-weight: 500;
+      font-size: clamp(18px, 1.5vw, 30px); /* 调大字号 */
+      font-weight: 700; /* 加粗 */
       color: #ffffff;
       text-align: center;
       text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
@@ -129,43 +136,38 @@
       letter-spacing: 0.5px;
     }
 
+    /* 响应式适配 */
     @media (max-width: 1200px) {
-      .countdown-wrapper {
-        width: 70%;
-      }
-
       .countdown-cards {
         gap: 12px;
       }
     }
 
     @media (max-width: 900px) {
+      /* 移动端调整：倒计时占满宽度，logo仍在右下角 */
       .countdown-wrapper {
         width: 100%;
-        right: 0;
-        bottom: 0;
         padding: 20px;
       }
-
-      .countdown-box {
-        transform: none;
-      }
-
       .countdown-cards {
         flex-wrap: wrap;
       }
-
-      .countdown-logo {
-        width: clamp(160px, 30vw, 260px);
+      .logo-wrapper {
+        width: clamp(60px, 10vw, 100px);
       }
     }
   </style>
 </head>
 <body>
   <div class="screen-container">
+    <!-- 施耐德logo - 独立容器放右下角 -->
+    <div class="logo-wrapper">
+      <img src="Schneider_CN.png" alt="Schneider Electric Logo" class="countdown-logo" />
+    </div>
+
+    <!-- 倒计时内容 - 左侧2/3区域居中 -->
     <div class="countdown-wrapper">
       <div class="countdown-box">
-        <img src="Schneider_CN.png" alt="Schneider Electric Logo" class="countdown-logo" />
         <div class="countdown-title">灯塔点亮倒计时...</div>
         <div class="countdown-subtitle">Countdown to Lighthouse Campus Audit</div>
 
@@ -227,7 +229,7 @@
       secondsEl.textContent = formatNum(seconds);
     }
 
-    updateCountdown();
+    updateCountdown()
     setInterval(updateCountdown, 1000);
   </script>
 </body>
