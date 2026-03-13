@@ -51,7 +51,7 @@
       filter: brightness(0) invert(1);
     }
 
-    /* 倒计时内容容器 - 左侧2/3区域居中 */
+    /* 倒计时内容容器 - 左侧2/3区域，倒计时卡片绝对居中 */
     .countdown-wrapper {
       position: absolute;
       left: 0;
@@ -59,8 +59,9 @@
       width: 66.6667%; /* 左侧2/3宽度 */
       height: 100vh;
       display: flex;
-      align-items: center; /* 垂直居中 */
-      justify-content: center; /* 水平居中 */
+      flex-direction: column; /* 垂直排列子元素 */
+      align-items: center;     /* 水平居中 */
+      justify-content: center; /* 垂直居中（核心：让倒计时卡片在该区域正中心） */
       padding: 20px;
     }
 
@@ -70,7 +71,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 2.2vh;
+      gap: 1.5vh; /* 缩小元素间距，让布局更紧凑 */
+      /* 文字相对于倒计时卡片的位置：向上偏移 */
+      margin-bottom: 2vh;
     }
 
     .countdown-title {
@@ -80,19 +83,20 @@
       text-align: center;
       text-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
       letter-spacing: 1px;
-      margin-bottom: 0.5vh;
+      /* 文字与倒计时卡片的间距 */
+      margin-bottom: 0.8vh;
     }
 
     /* 英文字体调大+加粗 */
     .countdown-subtitle {
-      font-size: clamp(18px, 1.5vw, 30px); /* 调大字号 */
-      font-weight: 700; /* 加粗 */
+      font-size: clamp(18px, 1.5vw, 30px);
+      font-weight: 700;
       color: #ffffff;
       text-align: center;
       text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
       letter-spacing: 0.5px;
-      margin-top: -0.4vh;
-      margin-bottom: 0.8vh;
+      /* 文字与倒计时卡片的间距 */
+      margin-bottom: 2vh;
     }
 
     .countdown-cards {
@@ -101,6 +105,8 @@
       justify-content: center;
       gap: 1.2vw;
       flex-wrap: nowrap;
+      /* 确保倒计时卡片是视觉中心 */
+      margin-bottom: 1.5vh;
     }
 
     .countdown-card {
@@ -136,6 +142,18 @@
       letter-spacing: 0.5px;
     }
 
+    /* 二维码样式：在50%放大基础上再放大30%（最终约为初始的1.95倍） */
+    .qrcode-box {
+      margin-top: 1.5vh; /* 与倒计时保持小间距 */
+      width: clamp(195px, 13.65vw, 273px); /* 150×1.3=195、10.5×1.3=13.65、210×1.3=273 */
+      height: auto;
+    }
+    .qrcode-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
     /* 响应式适配 */
     @media (max-width: 1200px) {
       .countdown-cards {
@@ -144,7 +162,6 @@
     }
 
     @media (max-width: 900px) {
-      /* 移动端调整：倒计时占满宽度，logo仍在右下角 */
       .countdown-wrapper {
         width: 100%;
         padding: 20px;
@@ -154,6 +171,9 @@
       }
       .logo-wrapper {
         width: clamp(60px, 10vw, 100px);
+      }
+      .qrcode-box {
+        width: clamp(175.5px, 23.4vw, 234px); /* 135×1.3=175.5、18×1.3=23.4、180×1.3=234 */
       }
     }
   </style>
@@ -165,33 +185,36 @@
       <img src="Schneider_CN.png" alt="Schneider Electric Logo" class="countdown-logo" />
     </div>
 
-    <!-- 倒计时内容 - 左侧2/3区域居中 -->
+    <!-- 倒计时内容 - 左侧2/3区域，倒计时卡片居中 -->
     <div class="countdown-wrapper">
       <div class="countdown-box">
         <div class="countdown-title">灯塔点亮倒计时...</div>
         <div class="countdown-subtitle">Countdown to Lighthouse Campus Audit</div>
+      </div>
 
-        <div class="countdown-cards">
-          <div class="countdown-card">
-            <div class="countdown-num" id="days">00</div>
-            <div class="countdown-label">DAYS</div>
-          </div>
-
-          <div class="countdown-card">
-            <div class="countdown-num" id="hours">00</div>
-            <div class="countdown-label">HOURS</div>
-          </div>
-
-          <div class="countdown-card">
-            <div class="countdown-num" id="minutes">00</div>
-            <div class="countdown-label">MINUTES</div>
-          </div>
-
-          <div class="countdown-card">
-            <div class="countdown-num" id="seconds">00</div>
-            <div class="countdown-label">SECONDS</div>
-          </div>
+      <!-- 倒计时卡片独立出来，确保绝对居中 -->
+      <div class="countdown-cards">
+        <div class="countdown-card">
+          <div class="countdown-num" id="days">00</div>
+          <div class="countdown-label">DAYS</div>
         </div>
+        <div class="countdown-card">
+          <div class="countdown-num" id="hours">00</div>
+          <div class="countdown-label">HOURS</div>
+        </div>
+        <div class="countdown-card">
+          <div class="countdown-num" id="minutes">00</div>
+          <div class="countdown-label">MINUTES</div>
+        </div>
+        <div class="countdown-card">
+          <div class="countdown-num" id="seconds">00</div>
+          <div class="countdown-label">SECONDS</div>
+        </div>
+      </div>
+
+      <!-- 二维码容器 -->
+      <div class="qrcode-box">
+        <img src="QR code.png" alt="二维码" class="qrcode-img" />
       </div>
     </div>
   </div>
